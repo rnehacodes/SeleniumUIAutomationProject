@@ -1,33 +1,29 @@
 package com.project.automaxn;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.Test;
 
-public class LoginTest {
+public class LoginTest extends BaseTest {
 
     @Test
     public void verifyLogin() {
-        System.setProperty("webdriver.chromedriver", "resources\\drivers\\chromedriver-win64\\chromedriver.exe");
+        // System.setProperty("webdriver.chromedriver", "resources\\drivers\\chromedriver-win64\\chromedriver.exe");
 
-        // Set ChromeOptions for controlling the zoom percentage
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--force-device-scale-factor=1"); // Set zoom to 90%
+        // // Set ChromeOptions for controlling the zoom percentage
+        // ChromeOptions options = new ChromeOptions();
+        // options.addArguments("--force-device-scale-factor=1"); // Set zoom to 90%
 
-        // Initialize WebDriver
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+        // // Initialize WebDriver
+        // WebDriver driver = new ChromeDriver(options);
+        // driver.manage().window().maximize();
 
-        // Set zoom to 80% using JavaScript (affects content scaling)
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.body.style.zoom='80%'");
+        // // Set zoom to 80% using JavaScript (affects content scaling)
+        // JavascriptExecutor js = (JavascriptExecutor) driver;
+        // js.executeScript("document.body.style.zoom='80%'");
 
-        String url = "https://demo.aeries.net/aeries/Login.aspx";
-        driver.get(url);
+        // String url = "https://demo.aeries.net/aeries/Login.aspx";
+        // driver.get(url);
 
         //Finding Username textbox using ID
         WebElement userNameBox = driver.findElement(By.id("Username_Aeries"));
