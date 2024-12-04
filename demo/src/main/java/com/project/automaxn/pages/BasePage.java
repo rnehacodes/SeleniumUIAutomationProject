@@ -5,8 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class BasePage {
+
     protected WebDriver driver;
-    
+    WebElement userDropdownMenu, logOutElement, navigationFilter;
+
     public BasePage(WebDriver driver) {
         this.driver = driver;
     }
@@ -27,11 +29,26 @@ public class BasePage {
         return driver.findElement(By.xpath(xpath));
     }
 
+    public WebElement getElementByCSS(String cssSelector) {
+        return driver.findElement(By.cssSelector(cssSelector));
+    }
+
+    public WebElement getElementByLinkText(String txt) {
+        return driver.findElement(By.linkText(txt));
+    }
+
     public void clickBtn(WebElement btn) {
         btn.click();
     }
 
     public void enterText(WebElement el, String text) {
         el.sendKeys(text);
+    }
+
+    public void logout() {
+        userDropdownMenu = getElementByClass("next-navbar-avatar");
+        clickBtn(userDropdownMenu);
+        logOutElement = getElementByLinkText("Log Out");
+        clickBtn(logOutElement);
     }
 }

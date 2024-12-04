@@ -2,6 +2,8 @@ package com.project.automaxn.utils;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -12,13 +14,9 @@ public class JsonConfigReader {
 
     // Static block to load the JSON file at runtime
     static {
-        try (InputStream inputStream = JsonConfigReader.class.getClassLoader().getResourceAsStream("credentials.json")) {
-            if (inputStream != null) {
-                Gson gson = new Gson();
-                credentials = gson.fromJson(new InputStreamReader(inputStream), Map.class);
-            } else {
-                throw new RuntimeException("Could not find credentials.json in resources folder");
-            }
+        try (InputStream inputStream = Files.newInputStream(Paths.get("D:\\Files\\SeleniumUIAutomationProject\\demo\\src\\main\\java\\com\\project\\automaxn\\resources\\config\\credentials.json"))) {
+            Gson gson = new Gson();
+            credentials = gson.fromJson(new InputStreamReader(inputStream), Map.class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to load credentials.json", e);

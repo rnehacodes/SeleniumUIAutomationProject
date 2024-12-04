@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import com.project.automaxn.resources.ConfigReader;
+import com.project.automaxn.resources.config.ConfigReader;
 
 public class DriverManager {
 
@@ -26,13 +26,14 @@ public class DriverManager {
             String browser = ConfigReader.getProperty("browser"); // Read browser choice from config
             switch (browser.toLowerCase()) {
                 case "chrome":
+                    System.setProperty("webdriver.chrome.driver", "D:\\Files\\SeleniumUIAutomationProject\\demo\\src\\main\\java\\com\\project\\automaxn\\resources\\drivers\\chromedriver-win64\\chromedriver.exe");
+
                     // Set ChromeOptions for controlling the zoom percentage
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("--force-device-scale-factor=1"); // Set zoom to 90%
-                    System.setProperty("webdriver.chrome.driver", "demo\\src\\main\\java\\com\\project\\automaxn\\resources\\drivers\\chromedriver-win64\\chromedriver.exe");
-
+                    
                     // Initialize Chrome WebDriver
-                    WebDriver driver = new ChromeDriver(options);
+                    driver = new ChromeDriver(options);
 
                     // Set zoom to 80% using JavaScript (affects content scaling)
                     JavascriptExecutor js = (JavascriptExecutor) driver;

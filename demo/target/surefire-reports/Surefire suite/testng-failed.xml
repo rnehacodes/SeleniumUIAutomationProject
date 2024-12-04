@@ -3,13 +3,12 @@
 <suite name="Failed suite [Surefire suite]" verbose="0">
   <test thread-count="5" name="Surefire test(failed)" verbose="0">
     <classes>
-      <class name="com.project.automaxn.LoginTest">
+      <class name="com.project.automaxn.LoginLogOutTests">
         <methods>
-          <include name="tearDown"/>
-          <include name="verifyLogin"/>
+          <include name="verifyLogout"/>
           <include name="setUp"/>
         </methods>
-      </class> <!-- com.project.automaxn.LoginTest -->
+      </class> <!-- com.project.automaxn.LoginLogOutTests -->
     </classes>
   </test> <!-- Surefire test(failed) -->
 </suite> <!-- Failed suite [Surefire suite] -->

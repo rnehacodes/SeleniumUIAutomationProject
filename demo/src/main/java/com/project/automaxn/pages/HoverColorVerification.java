@@ -1,4 +1,4 @@
-package com.project.automaxn;
+package com.project.automaxn.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
