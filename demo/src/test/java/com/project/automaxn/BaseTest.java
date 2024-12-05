@@ -2,7 +2,6 @@ package com.project.automaxn;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import com.project.automaxn.pages.HomePage;
@@ -25,6 +24,7 @@ public class BaseTest {
             throw new IllegalArgumentException("Base URL is not set in the configuration file.");
         }
         driver.get(ConfigReader.getProperty("baseUrl"));
+        Login();
     }
 
     public void Login() {
@@ -47,12 +47,9 @@ public class BaseTest {
         Assert.assertTrue(loginPage.isUserLoggedOut(), "User could NOT log out successfully.");
     }
 
-    public void pageNavigation(String pageName) {
-        //
-    }
-
-    @AfterMethod
+    // @AfterMethod
     public void tearDown() {
+        Logout();
         DriverManager.quitDriver();
     }
 }

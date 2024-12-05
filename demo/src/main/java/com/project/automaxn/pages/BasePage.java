@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 public class BasePage {
 
     protected WebDriver driver;
-    WebElement userDropdownMenu, logOutElement, navigationFilter;
+    WebElement userDropdownMenu, logOutElement, navigationFilter, loggedInSchool;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -37,7 +37,7 @@ public class BasePage {
         return driver.findElement(By.linkText(txt));
     }
 
-    public void clickBtn(WebElement btn) {
+    public void click(WebElement btn) {
         btn.click();
     }
 
@@ -45,10 +45,25 @@ public class BasePage {
         el.sendKeys(text);
     }
 
+    public void pageNavigation(String pageName) {
+        navigationFilter = getElementByXPath("//input[@placeholder=\"Filter Navigation\"]");
+        enterText(navigationFilter, pageName);
+        click((getElementByXPath("//a[@title=\"" + pageName + "\"]")));
+    }
+
+    public boolean verifyPageNavigation(String pageTitle) {
+        return getElementByXPath("//h2[contains(text(), '" + pageTitle + "')]").isDisplayed();
+    }
+
+    public String getSchoolName() {
+        String schoolName = getElementByXPath("//a[@title=\"Change School\"]").getText();
+        return schoolName;
+    }
+
     public void logout() {
         userDropdownMenu = getElementByClass("next-navbar-avatar");
-        clickBtn(userDropdownMenu);
+        click(userDropdownMenu);
         logOutElement = getElementByLinkText("Log Out");
-        clickBtn(logOutElement);
+        click(logOutElement);
     }
 }

@@ -46,12 +46,12 @@ public class LoginPage extends BasePage{
     }
 
     public void clickLoginBtn() {
-        clickBtn(loginBtn);
+        click(loginBtn);
         continueBtn = getElementByName("btnContinueIn_Aeries");
     }
 
     public void clickContinueBtn() {
-        clickBtn(continueBtn);
+        click(continueBtn);
     }
 
     public void login() {
