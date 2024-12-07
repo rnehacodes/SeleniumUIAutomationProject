@@ -10,5 +10,12 @@ public class Demographics extends BasePage{
     }
 
     //defining page elements
-    WebElement addBtn;
+    WebElement addBtn, studentNotFoundBtn;
+
+    public void addStudent() {
+        addBtn = getElementByXPath("//input[@value='Add']");
+        click(addBtn);
+        studentNotFoundBtn = getElementByXPath("//input[@value=\"Add\"]");
+        click(studentNotFoundBtn);
+    }
 }

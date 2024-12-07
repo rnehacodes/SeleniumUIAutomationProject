@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 public class BasePage {
 
     protected WebDriver driver;
-    WebElement userDropdownMenu, logOutElement, navigationFilter, loggedInSchool;
+    WebElement userDropdownMenu, logOutElement, navigationFilter, loggedInSchool = getElementByXPath("//a[@title='Change School']");
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -56,8 +56,27 @@ public class BasePage {
     }
 
     public String getSchoolName() {
-        String schoolName = getElementByXPath("//a[@title=\"Change School\"]").getText();
-        return schoolName;
+        return loggedInSchool.getText();
+    }
+
+    public String getCurrentStudentID() {
+        return getElementByXPath("//span[@data-tcfc='STU.ID']").getText();
+    }
+
+    public void changeSchool(String schoolName) {
+        loggedInSchool.click();
+        getElementByXPath("//a[contains(text(), '" + schoolName + "')]").click();
+    }
+
+    public String addNewStudentInSchool(String schoolName) {
+        if(getSchoolName().contains("District")) {
+            changeSchool(schoolName);
+        }
+        pageNavigation("Demographics");
+
+        //import addStudent function from Demographics page
+
+        return getCurrentStudentID();
     }
 
     public void logout() {
