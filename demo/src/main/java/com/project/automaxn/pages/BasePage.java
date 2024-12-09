@@ -1,5 +1,8 @@
 package com.project.automaxn.pages;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,7 +10,18 @@ import org.openqa.selenium.WebElement;
 public class BasePage {
 
     protected WebDriver driver;
-    WebElement userDropdownMenu, logOutElement, navigationFilter, loggedInSchool = getElementByXPath("//a[@title='Change School']");
+    WebElement userDropdownMenu, logOutElement, navigationFilter, loggedInSchool;
+
+    public String getTodaysDTS() {
+        // Get today's date
+        LocalDate today = LocalDate.now();
+
+        // Define the desired format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
+
+        // Format the date
+        return today.format(formatter);
+    }
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -55,7 +69,8 @@ public class BasePage {
         return getElementByXPath("//h2[contains(text(), '" + pageTitle + "')]").isDisplayed();
     }
 
-    public String getSchoolName() {
+    public String getSchoolName() {        
+        loggedInSchool = getElementByXPath("//a[@title='Change School']");
         return loggedInSchool.getText();
     }
 
@@ -64,19 +79,25 @@ public class BasePage {
     }
 
     public void changeSchool(String schoolName) {
+        loggedInSchool = getElementByXPath("//a[@title='Change School']");
         loggedInSchool.click();
         getElementByXPath("//a[contains(text(), '" + schoolName + "')]").click();
     }
 
     public String addNewStudentInSchool(String schoolName) {
-        if(getSchoolName().contains("District")) {
+        if (getSchoolName().contains("District")) {
             changeSchool(schoolName);
         }
         pageNavigation("Demographics");
 
-        //import addStudent function from Demographics page
+        Demographics demographics = new Demographics(driver);        
 
-        return getCurrentStudentID();
+        //import addStudent function from Demographics page
+        return demographics.addStudent();
+    }
+
+    public WebElement getinputFieldByFieldCode(String fieldCode) {
+        return driver.findElement(By.xpath("//td[@data-tcfc='" + fieldCode + "']/input"));
     }
 
     public void logout() {
