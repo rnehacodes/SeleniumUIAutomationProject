@@ -15,13 +15,11 @@ public class MedicalLogTest extends BaseTest{
 
         medicalLog.pageNavigation(pageName);
 
-        //Verifying page Navigation
+        //Verifying Medical Log page Navigation
         Assert.assertTrue(medicalLog.verifyPageNavigation(pageName), pageName + "page navigation was NOT successfully.");
 
-        String currentSchool = medicalLog.getSchoolName();
-        if(currentSchool.contains("District")) {
-            medicalLog.addNewStudentInSchool("994");
-        }
+        //Navigate to test student 
+        medicalLog.searchStudentById("");
 
     }
 }

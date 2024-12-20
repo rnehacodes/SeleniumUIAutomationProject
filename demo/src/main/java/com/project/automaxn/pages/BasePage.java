@@ -4,20 +4,46 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class BasePage {
 
     protected WebDriver driver;
-    WebElement userDropdownMenu, logOutElement, navigationFilter, loggedInSchool;
+    WebElement userDropdownMenu, logOutElement, navigationFilter, loggedInSchool, navigationCloseBtn, navigationMenuBtn, studentSearchElement;
+    public String studentID;
+    LocalDate today = LocalDate.now();          // Get today's date
+    DateTimeFormatter formatter;
 
     public String getTodaysDTS() {
-        // Get today's date
-        LocalDate today = LocalDate.now();
-
         // Define the desired format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
+        formatter = DateTimeFormatter.ofPattern("ddMMyy");
+
+        // Format the date
+        return today.format(formatter);
+    }
+
+    public String getTodaysDate() {
+        // Define the desired format
+        formatter = DateTimeFormatter.ofPattern("dd");
+
+        // Format the date
+        return today.format(formatter);
+    }
+
+    public String getTodaysMonth() {
+        // Define the desired format
+        formatter = DateTimeFormatter.ofPattern("MM");
+
+        // Format the date
+        return today.format(formatter);
+    }
+
+    public String getTodaysYear() {
+        // Define the desired format
+        formatter = DateTimeFormatter.ofPattern("yyyy");
 
         // Format the date
         return today.format(formatter);
@@ -59,23 +85,63 @@ public class BasePage {
         el.sendKeys(text);
     }
 
+    public void scrollAndEnterText(WebElement element, String text) {
+        // Scroll to the element
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        // Call the existing enterText function
+        enterText(element, text);
+    }
+
     public void pageNavigation(String pageName) {
-        navigationFilter = getElementByXPath("//input[@placeholder=\"Filter Navigation\"]");
+        // Locate elements A and B
+        By closeBtn = By.xpath("//*[local-name()='use' and contains(@href, 'nav-close')]");
+        By menuBtn = By.xpath("//*[local-name()='use' and contains(@href, 'nav-menu')]");
+
+        try {
+            WebElement navigationCloseBtn = driver.findElement(closeBtn);
+
+            // Check if Navigation close button is visible
+            if (navigationCloseBtn.isDisplayed()) {
+                System.out.println("Element A is visible. Doing nothing.");
+            } else {
+                navigationMenuBtn = driver.findElement(menuBtn);
+                navigationMenuBtn.click();
+                System.out.println("Navigation close button is not visible. Clicked on Navigation Menu Button.");
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Navigation close button does not exist in the DOM. Clicking on Navigation Menu Button.");
+            navigationMenuBtn = driver.findElement(menuBtn);
+            navigationMenuBtn.click();
+        }
+
+        // if (navigationCloseBtn = getElementByXPath("//a[@title='Open Navigation']")) {
+        //     
+        // }
+        navigationFilter = getElementByXPath("//input[@placeholder='Filter Navigation']");
         enterText(navigationFilter, pageName);
-        click((getElementByXPath("//a[@title=\"" + pageName + "\"]")));
+        click((getElementByXPath("//a[@title='" + pageName + "']")));
     }
 
     public boolean verifyPageNavigation(String pageTitle) {
         return getElementByXPath("//h2[contains(text(), '" + pageTitle + "')]").isDisplayed();
     }
 
-    public String getSchoolName() {        
+    public String getSchoolName() {
         loggedInSchool = getElementByXPath("//a[@title='Change School']");
         return loggedInSchool.getText();
     }
 
     public String getCurrentStudentID() {
-        return getElementByXPath("//span[@data-tcfc='STU.ID']").getText();
+        return getElementByXPath("(//div[@class='data-row']/div[@data-tcfc='STU.ID'])[1]").getText();
+    }
+
+    public void searchStudentById(String id) {
+        studentSearchElement = getElementByXPath("//input[@placeholder='Search Student']");
+        if(id != null) {
+            studentSearchElement.sendKeys(studentID);
+        } else {
+            studentSearchElement.sendKeys(id);
+        }
     }
 
     public void changeSchool(String schoolName) {
@@ -90,7 +156,7 @@ public class BasePage {
         }
         pageNavigation("Demographics");
 
-        Demographics demographics = new Demographics(driver);        
+        Demographics demographics = new Demographics(driver);
 
         //import addStudent function from Demographics page
         return demographics.addStudent();

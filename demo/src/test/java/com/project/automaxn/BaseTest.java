@@ -2,8 +2,12 @@ package com.project.automaxn;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
+import com.project.automaxn.pages.BasePage;
+import com.project.automaxn.pages.Demographics;
 import com.project.automaxn.pages.HomePage;
 import com.project.automaxn.pages.LoginPage;
 import com.project.automaxn.resources.config.ConfigReader;
@@ -14,6 +18,7 @@ public class BaseTest {
     protected WebDriver driver;
     LoginPage loginPage;
     HomePage homePage;
+    BasePage basePage;
 
     @BeforeMethod
     public void setUp() {
@@ -25,6 +30,13 @@ public class BaseTest {
         }
         driver.get(ConfigReader.getProperty("baseUrl"));
         Login();
+    }
+
+    @BeforeSuite
+    public void createTestStudent() {
+        setUp();
+        Demographics demographics = new Demographics(driver);
+        basePage.studentID = demographics.addNewStudentInSchool(ConfigReader.getProperty("school"));
     }
 
     public void Login() {
@@ -47,7 +59,7 @@ public class BaseTest {
         Assert.assertTrue(loginPage.isUserLoggedOut(), "User could NOT log out successfully.");
     }
 
-    // @AfterMethod
+    @AfterMethod
     public void tearDown() {
         Logout();
         DriverManager.quitDriver();

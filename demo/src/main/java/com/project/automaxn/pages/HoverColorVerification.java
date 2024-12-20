@@ -10,6 +10,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class HoverColorVerification {
 
 	public static void main(String[] args) {
+		// App.main("test");
+
 		System.setProperty("webdriver.chromedriver", "resources\\drivers\\chromedriver-win64\\chromedriver.exe");
 
 		// Set ChromeOptions for controlling the zoom percentage

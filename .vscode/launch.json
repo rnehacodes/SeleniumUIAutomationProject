@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "com.project.automaxn.pages.App",
+      "projectName": "demo"
+    },
+    {
+      "type": "java",
+      "name": "HoverColorVerification",
+      "request": "launch",
+      "mainClass": "com.project.automaxn.pages.HoverColorVerification",
+      "projectName": "demo"
+    },
+    {
+      "type": "java",
       "name": "HoverColorVerification",
       "request": "launch",
       "mainClass": "com.project.automaxn.HoverColorVerification",

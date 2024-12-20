@@ -14,6 +14,7 @@ public class DemographicsTest extends BaseTest{
         String pageName = "Demographics";
 
         demographics.pageNavigation(pageName);
-        demographics.addNewStudentInSchool("994");
+        String id = demographics.addNewStudentInSchool("894");
+        System.out.println(id);
     }
 }
