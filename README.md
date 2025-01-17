@@ -1,1 +1,1 @@
-# AeriesUIAutomationProject
+# SeleniumUIAutomationProject

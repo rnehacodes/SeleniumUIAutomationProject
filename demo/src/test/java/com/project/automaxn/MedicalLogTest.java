@@ -12,6 +12,7 @@ public class MedicalLogTest extends BaseTest{
         //Navigate to Medical Log Page
         MedicalLog medicalLog = new MedicalLog(driver);    
         String pageName = "Medical Log";
+
         medicalLog.pageNavigation(pageName);
 
         //Verifying Medical Log page Navigation
@@ -19,9 +20,6 @@ public class MedicalLogTest extends BaseTest{
 
         //Navigate to test student 
         medicalLog.searchStudentById("");
-
-        //~~~~~~~~~~~~~~~~~~~Add Student~~~~~~~~~~~~~~~~~~~
-        medicalLog.addMedicalLogRecord();
 
     }
 }

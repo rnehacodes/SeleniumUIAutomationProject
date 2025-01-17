@@ -9,8 +9,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.project.automaxn.utils.JsonConfigReader;
-
 public class BasePage {
 
     protected WebDriver driver;
@@ -139,8 +137,8 @@ public class BasePage {
 
     public void searchStudentById(String id) {
         studentSearchElement = getElementByXPath("//input[@placeholder='Search Student']");
-        if (id == "") {
-            studentSearchElement.sendKeys(JsonConfigReader.getCredential("student", "crudOprxn"));
+        if(id != null) {
+            studentSearchElement.sendKeys(studentID);
         } else {
             studentSearchElement.sendKeys(id);
         }
