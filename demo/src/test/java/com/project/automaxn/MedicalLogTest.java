@@ -20,7 +20,7 @@ public class MedicalLogTest extends BaseTest{
         //Navigate to test student 
         medicalLog.searchStudentById("");
 
-        //~~~~~~~~~~~~~~~~~~~Add Student~~~~~~~~~~~~~~~~~~~
+        //~~~~~~~~~~~~~~~~~~~Add Medical Log Record~~~~~~~~~~~~~~~~~~~
         medicalLog.addMedicalLogRecord();
 
     }
